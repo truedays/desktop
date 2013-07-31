@@ -1,5 +1,6 @@
-#! /usr/bin/python
-# Part of Ray's desktop essentials
+#!/usr/bin/python
+# Part of Ray's desktop essentials https://github.com/truedays/desktop/
+#
 # originally from http://xrunhprof.wordpress.com/2009/09/05/removing-decoration-in-xfwm-or-metacity-again/
 # DESC: running '/usr/bin/python border_toggle.py' will toggle the current active window's window borders.
 # USEAGE: This script should be called by a custom hot-key (ex: ctrl-alt-i)
