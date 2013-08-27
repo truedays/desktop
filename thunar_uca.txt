@@ -1,0 +1,7 @@
+# custom thunar actions should be here. Add script to check if installed otherwise add this to /home/$USER/.config/Thunar/uca.xml
+
+# below action req. sshkey to webserver, +index enabled, etc.. etc..
+<action><icon>stock_save</icon><name>Push to WebFolder</name><command>rsync -av %F www@your.webserver.com:/var/www/html/thunar/ | zenity --progress --pulsate --auto-kill --text=&quot;Copying %F to http://your.webserver.com/thunar/&quot;</command><description>your.webserver.com:/var/www/html/thunar</description><patterns>*</patterns><directories/><audio-files/><image-files/><other-files/><text-files/><video-files/></action>
+
+#end last custom action with closing:
+</actions>
