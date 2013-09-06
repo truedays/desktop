@@ -1,0 +1,9 @@
+#!/bin/bash
+#
+# Zenity system tray interface to lock/unlock encfs mounts
+#
+# Work in progress
+# add error handling (wrong password, unmount fail/busy etc..
+# look in to realtime icon status
+
+while : ;do zenity --notification --window-icon=/usr/share/icons/hicolor/22x22/apps/gdu-encrypted-lock.png --text "Click to unlock encrypted files";encfs /media/deskbackup/.crypt/ /media/deskbackup/crypt/ --extpass='zenity  --title "Unlock EncFS" --entry --text "Enter the password to decrypt the EncFS filesystem"'; zenity --notification --window-icon=/usr/share/icons/hicolor/22x22/apps/gdu-encrypted-unlock.png --text "Click to secure content"; fusermount -u /media/deskbackup/crypt/; done
