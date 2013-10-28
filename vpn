@@ -7,11 +7,13 @@
 #Get first and 2nd args
 set vpnip [lindex $argv 0]
 set vpnpassword [lindex $argv 1]
-#set timeout -1
-#puts "Connecting to $vpnip with $vpnpassword"
-#spawn /usr/bin/ssh -l root $rayinput w
+
+set timeout -1
+## enable exp_internal for debuging
 #exp_internal 1
+## prevent spawn's output going to stdout
 log_user 0
+
 spawn /opt/cisco/vpn/bin/vpn connect $vpnip
 expect {
  "state: Disconnected" {
@@ -33,4 +35,3 @@ expect {
  puts "Already connected to the VPN"
 }
 }
-#puts "Done :-)"
