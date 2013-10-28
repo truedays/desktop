@@ -1,0 +1,39 @@
+#!/usr/bin/expect -f
+# Connect to VPN
+# Usage: ./vpn {vpn IP} {password}
+# Assumes previous defaults and presses return(\r) on some instances
+# Oct 28, 2013 -Ray
+
+#Get first and 2nd args
+set vpnip [lindex $argv 0]
+set vpnpassword [lindex $argv 1]
+set timeout -1
+#puts "Connecting to $vpnip with $vpnpassword"
+
+## enable exp_internal for debuging
+#exp_internal 1
+
+## prevent spawn's output going to stdout
+log_user 0
+
+spawn /opt/cisco/vpn/bin/vpn connect $vpnip
+expect {
+ "state: Disconnected" {
+ expect "Group:" 
+  send "\r"
+ expect "Username:"
+  send "\r"
+ expect "Password:"
+  send "$vpnpassword\r"
+ expect "accept?"
+  send "y\r"
+ expect "VPN session established"
+  send "exit\r"
+  puts "Connected to the VPN\n"
+ }
+ "state: Connected" {
+ expect eof
+ puts "Already connected to the VPN"
+}
+}
+puts "Done :-)"
