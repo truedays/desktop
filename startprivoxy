@@ -1,0 +1,22 @@
+#!/bin/bash
+#
+# startproxy.sh - Starts a SOCKS tunnel to my privoxy server
+#
+# Ray 11/02/2013
+# https://github.com/truedays/desktop/
+
+### USER VARIABLES ###
+tunneled_port=8118
+socks_user="proxy"
+socks_host="proxy"
+listen_host="localhost"
+listen_port=8118
+
+
+echo -en "Establishing tunnel."
+./dots .1 &
+DOTS=$!
+ps aux | grep -v grep | grep -q "8118:localhost:8118" || /usr/bin/ssh -q -f -N -L 8118:localhost:8118 ${socks_user}@proxy
+kill $DOTS
+echo "connection established!"
+
