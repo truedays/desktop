@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash#!/bin/bash
 #
 # startproxy.sh - Starts a SOCKS tunnel to my privoxy server
 #
@@ -12,11 +12,9 @@ socks_host="proxy"
 listen_host="localhost"
 listen_port=8118
 
-
 echo -en "Establishing tunnel."
 ./dots .1 &
 DOTS=$!
-ps aux | grep -v grep | grep -q "8118:localhost:8118" || /usr/bin/ssh -q -f -N -L 8118:localhost:8118 ${socks_user}@proxy
+ps aux | grep -v grep | grep -q "${listen_port}:${listen_host}:${tunneled_port}" || /usr/bin/ssh -q -f -N -L ${listen_port}:${listen_host}:${tunnel_port} ${socks_user}@${socks_host}
 kill $DOTS
 echo "connection established!"
-
