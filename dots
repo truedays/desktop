@@ -1,0 +1,30 @@
+#!/bin/bash
+#
+# dots - Simple bash script to display character(s) at user-defined intervals.
+#
+# Version .01 Ray November 2, 2013
+# https://github.com/truedays/desktop/blob/master/dots
+
+
+default_wait=.2
+default_dots="."
+
+function help {
+	echo " $0 usage: "
+	echo 
+	echo " $0 <delay> [\"dot character\"] "
+	echo
+	echo " Examples: "
+	echo " $0 .3 "
+	echo " $0 2 \"#\" "
+	echo
+}
+
+case "$1" in
+*[a-zA-Z]*)		# call help() if non-numeric
+	help
+	exit 1
+	;;
+esac
+
+while :; do echo -n ${2:-$default_dots}; sleep ${1:-$default_wait}; done
