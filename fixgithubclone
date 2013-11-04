@@ -1,0 +1,16 @@
+#!/bin/bash
+#
+# Fix URL = directive in .git/config when git cloning from github
+# replaces https://github.com/REPO => git@github.com:REPO
+#
+# find is used to search for the config file(s) and asks for confirmation before applying
+#
+# November 04, 2013
+# https://github.com/truedays/
+#
+
+## Pure sed:
+##  sed -i 's/url = http.*github\.com\//url = git@github.com:/g' <FILENAME>
+
+echo "Searching current working directory recursively for .git/config files..
+find -name "config" -ok sed -i 's/url = http.*github\.com\//url = git@github.com:/g' '{}' \;
