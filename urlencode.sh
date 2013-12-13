@@ -4,21 +4,55 @@
 #
 
 # Enocde as much of the string as possible
+#
+# ToDo: Add another mode to be gentle with ?field1=foo&field2=bar
 
-# combine all user args to one string
-string=$*
-# length of string
-lenofstring=${#string}
-#echo lenofstring: $lenofstring
+case $1 in
+	-h*|--h*) 
+	cat <<-EOM
+	
+	:: Info ::
 
-echo $string
-echo lenth of string is ${#string}
-echo
+	$0 will encode a simple message and possibly make a working obfuscated URL.
+	V.01 12/12/2013 GPLv3
+	URL: https://github.com/truedays/desktop/
+	
+	Example:
+	https://github.com/truedays
+	can become
+	https://%67%69%74%68%75%62%2E%63%6F%6D/%74%72%75%65%64%61%79%73
+	
 
-for each in `seq 0 $lenofstring`
- do 
- echo ${string:$each:1}
-done
+	:: Help ::
+
+	-v --verbose = Show user-friendly output
+	-h --help    = This help screen
+	-q --quiet   = Quiet-mode. Just show the encoded string
+
+
+	EOM
+	exit 0
+	;;
+
+	-v*|--v*)
+	string=$2 # verbose mode only take one argument
+	lenofstring=${#string}
+	;;
+
+	*)
+	verbose=1
+	# combine all user args to one string
+	string=$*
+	# length of string
+	lenofstring=${#string}
+	;;
+esac
+
+
+#for each in `seq 0 $lenofstring`
+# do 
+# echo ${string:$each:1}
+#done
 
 declare -A c=( 
 [" "]="%20"
@@ -114,22 +148,30 @@ declare -A c=(
 ["~"]="%7E"
 )
 
-for each in `seq 0 $(($lenofstring-1))`
- do 
- echo ${string:$each:1} :: ${c["${string:$each:1}"]}
-done
+#for each in `seq 0 $(($lenofstring-1))`
+# do 
+# echo ${string:$each:1} :: ${c["${string:$each:1}"]}
+#done
 
 # Print encoded text
 for each in `seq 0 $(($lenofstring-1))`
  do 
  echo -en ${c["${string:$each:1}"]}
 done
-
 echo
+[ $verbose ] && exit 0  # End here if not in -verbose mode
 
-# Print plain text (and try to line it up with urlencoding)
+# Print expanded plain text (and try to line it up with urlencoding)
 for each in `seq 0 $(($lenofstring-1))`
  do 
  echo -en "·${string:$each:1}·"
 done
+echo
+echo 
+# Show original string with char count
+echo $string
+for n in `seq $lenofstring`; do echo -n "^"; done;
+[ $lenofstring -le 58 ] && echo -n " <--" || echo -en "\n^-"
+echo -n "length of string is ${#string}"
+echo
 
