@@ -23,20 +23,18 @@ done
 declare -A c=( 
 [" "]="%20"
 ["!"]="%21"
-["\""]="%22"
-["#"]="%23"
+["#"]="#"
 ["$"]="%24"
 ["%"]="%25"
 ["&"]="%26"
 ["'"]="%27"
 ["("]="%28"
 [")"]="%29"
-["\*"]="%2A"
-["+"]="%2B"
+["+"]="+"
 [","]="%2C"
-["."]="%2D"
-["/"]="%2E"
-["+"]="%2F"
+["-"]="%2D"
+["."]="%2E"
+["/"]="/"
 ["0"]="%30"
 ["1"]="%31"
 ["2"]="%32"
@@ -50,10 +48,9 @@ declare -A c=(
 [":"]="%3A"
 [";"]="%3B"
 ["<"]="%3C"
-["="]="%3E"
+["="]="="
 [">"]="%3E"
-["?"]="%3F"
-["\@"]="%40"
+["?"]="?"
 ["A"]="%41"
 ["B"]="%42"
 ["C"]="%43"
@@ -115,18 +112,24 @@ declare -A c=(
 ["|"]="%7C"
 ["}"]="%7D"
 ["~"]="%7E"
-["\`"]="%80"
 )
-
-echo xxx
-echo ${c["${string:0:1}"]}
-echo ${c["${string:1:1}"]}
-echo ${c["${string:2:1}"]}
-#echo ${c["${string:3:1}"]}
-#echo ${c["${string:4:1}"]}
-echo xxx
 
 for each in `seq 0 $(($lenofstring-1))`
  do 
  echo ${string:$each:1} :: ${c["${string:$each:1}"]}
 done
+
+# Print encoded text
+for each in `seq 0 $(($lenofstring-1))`
+ do 
+ echo -en ${c["${string:$each:1}"]}
+done
+
+echo
+
+# Print plain text (and try to line it up with urlencoding)
+for each in `seq 0 $(($lenofstring-1))`
+ do 
+ echo -en "·${string:$each:1}·"
+done
+
