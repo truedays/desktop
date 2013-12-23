@@ -1,16 +1,62 @@
 #!/bin/bash
 #
-# Fix URL = directive in .git/config when git cloning from github
-# replaces https://github.com/REPO => git@github.com:REPO
-#
-# find is used to search for the config file(s) and asks for confirmation before applying
-#
-# November 04, 2013
+# fixgithubclone - Fixes remote.origin.url after fresh git clone
+#  Also checks/updates global username/email
+
+# NOTES: find is used to search for the .git/config files. So this will fix
+#  Multiple repos, but will prompt you 
+# 
+# v.01 November 04, 2013
+# v.02 December 11, 2013 +global var checks
 # https://github.com/truedays/
 #
+
+name="truedays"
+email="ray@zNOSPAMz.org"
 
 ## Pure sed:
 ##  sed -i 's/url = http.*github\.com\//url = git@github.com:/g' <FILENAME>
 
 echo "Searching current working directory recursively for .git/config files.."
 find -name "config" -ok sed -i 's/url = http.*github\.com\//url = git@github.com:/g' '{}' \;
+
+#test for global settings
+
+origname="$(git config --global --get user.name)"
+origemail="$(git config --global --get user.email)"
+email=${email/zNOSPAMz/truedays}
+
+
+if [ -z "$origname" ]
+ then
+  echo "No global user name detected. Setting to $name"
+  echo "(to undo run: git config --global --unset user.name)"
+  git config --global user.name $name
+ 
+ elif [ ! "$name" == "$origname" ]
+ then
+  echo "Global name set, but does not match $name. "
+  echo "$origname changed to $name"
+  echo "to revert changes run: git config --global user.name \"$origname\""
+  git config --global user.name $name
+# else
+#  echo "global name set correctly"
+fi
+
+if [ -z "$origemail" ]
+ then
+  echo "No global email detected. Setting to $email"
+  echo "(to undo run: git config --global --unset user.email)"
+  git config --global user.email $email
+
+ elif [ ! "$email" == "$origemail" ]
+ then
+  echo "Global email set, but does not match $email. "
+  echo "$origemail changed to $email"
+  echo "to revert changes run: git config --global user.email \"$origemail\""
+  git config --global user.email $email
+# else
+#  echo "global email set correctly"
+fi
+
+
