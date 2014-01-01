@@ -16,13 +16,24 @@ led() {
 gpio=${led[${1:-0}]}  # func's argv $1 => 'led' array key
 onsec=${2:-.5}
 offsec=${3:-.5}
-echo 1 > /sys/class/gpio/gpio${gpio}/value
-sleep ${onsec}
-echo 0 > /sys/class/gpio/gpio${gpio}/value
-sleep ${offsec}
+(echo 1 > /sys/class/gpio/gpio${gpio}/value; sleep ${onsec}; echo 0 > /sys/class/gpio/gpio${gpio}/value; sleep ${offsec})&
 
 echo "GPIO: ${gpio:-"xx"} on for $onsec and off for $offsec"
 }
 
 
-led $*
+ladder() {
+for n in 1..${1:-1}
+do
+  for x in 0 1 2 3
+  do
+    led $x 1 1
+  done
+  if [ $n > 1 ] ;then sleep 1; fi
+done
+}
+
+ladder 2
+#led $*
+
+
