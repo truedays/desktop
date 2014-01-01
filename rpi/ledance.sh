@@ -22,18 +22,26 @@ echo "GPIO: ${gpio:-"xx"} on for $onsec and off for $offsec"
 }
 
 
-ladder() {
-for n in 1..${1:-1}
-do
+ladder() {          # ladder <# iterations> <delay sec>
+for (( i=0; i<${1:-1}; i++ )); do
   for x in 0 1 2 3
   do
     led $x 1 1
+    sleep ${2:-.5}
   done
   if [ $n > 1 ] ;then sleep 1; fi
 done
 }
 
-ladder 2
+#ladder 2 $1
 #led $*
 
-
+for (( i=0; i<${1:-1}; i++ )); do     # arg $1 decides how many times to loop, button count is counted QUICKLY, a few a second
+  echo $i
+  while [ $(cat /sys/class/gpio/gpio3/value) == 1 ]
+  do
+    echo -n "."
+    sleep .02
+  done
+  echo -n ButtoPressDetected
+done
