@@ -5,8 +5,8 @@
 
 # TODO put CPIO INIT code here
 
-# LEDs are on gpio pin 4 17 22 27
-declare -A led=([0]=4 [1]=17 [2]=22 [3]=27)
+# LEDs are on gpio pin 4 17 27 22
+declare -A led=([0]=4 [1]=17 [2]=27 [3]=22)
 #echo ${led[0]}
 #echo ${led[1]}
 #echo ${led[2]}
