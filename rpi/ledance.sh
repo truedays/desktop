@@ -3,6 +3,8 @@
 # ledance (L.E.D. [d]ance) bash script for Raspberry Pi
 # Ray 12/31/2013
 
+# TODO put CPIO INIT code here
+
 # LEDs are on gpio pin 4 17 22 27
 declare -A led=([0]=4 [1]=17 [2]=22 [3]=27)
 #echo ${led[0]}
