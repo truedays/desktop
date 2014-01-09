@@ -11,5 +11,5 @@ lynx --dump "http://forecast.weather.gov/MapClick.php?textField1=42.1099506&text
 ##sleep 900
 ##done
 
-mv /tmp/weather.log{,.tmp}
-/usr/bin/sort -ug /tmp/weather.log.tmp > /tmp/weather.log
+/usr/bin/awk '{print $1}' /tmp/weather.log > /tmp/weather.log.tmp
+/usr/bin/sort -u /tmp/weather.log.tmp > /tmp/weather.log
