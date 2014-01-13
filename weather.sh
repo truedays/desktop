@@ -11,6 +11,13 @@ lynx --dump "http://forecast.weather.gov/MapClick.php?lat=42.13133052651052&lon=
 ##sleep 900
 ##done
 
+#look for anything looking like I want to log (ex: weather.sh -log) otherwise exit now
+case $1 in
+  *[Ll]*) ;;
+  *) exit ;;
+esac
+
 /usr/bin/awk '{print $1}' /tmp/weather.log > /tmp/weather.log.tmp
-/usr/bin/sort -u /tmp/weather.log.tmp > /tmp/weather.log
+sort -u /tmp/weather.log.tmp > /tmp/weather.log
 rm /tmp/weather.log.tmp
+

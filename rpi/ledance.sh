@@ -33,6 +33,19 @@ for (( i=0; i<${1:-1}; i++ )); do
 done
 }
 
+dance() {
+now=$SECONDS
+while [ $(($now + 15)) > $SECONDS ]
+do
+  for x in 0 1 2 3
+  do
+  (echo 1 > /sys/class/gpio/gpio${x}/value; sleep .${RANDOM}; echo 0 > /sys/class/gpio/gpio${x}/value; sleep .${RANDOM})&
+done
+done
+sleep .5$RANDOM
+}
+
+
 #ladder 2 $1
 #led $*
 
@@ -44,4 +57,5 @@ for (( i=0; i<${1:-1}; i++ )); do     # arg $1 decides how many times to loop, b
     sleep .02
   done
   echo -n ButtoPressDetected
+  dance
 done
