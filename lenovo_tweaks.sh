@@ -8,6 +8,6 @@
 synclient RightButtonAreaTop=0 ; synclient RightButtonAreaLeft=0
 
 ## Swap Right-Alt key to Context Menu key
-xmodmap -e "keycode 108 = Menu"  # Change RightAlt into Menu key
-echo "xmodmap -e "keycode 108 = Menu"  # Change RightAlt into Menu key" >> ~/.Xmodmap
+xmodmap -e "keycode 105 = Menu"  # Change RightCtrl into Menu key
+echo "xmodmap -e "keycode 105 = Menu"  # Change RightCtrl into Menu key" >> ~/.Xmodmap
 
