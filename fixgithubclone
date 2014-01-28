@@ -18,7 +18,7 @@ email="ray@zNOSPAMz.org"
 ##  sed -i 's/url = http.*github\.com\//url = git@github.com:/g' <FILENAME>
 
 echo "Searching current working directory recursively for .git/config files.."
-find -name "config" -ok sed -i 's/url = http.*github\.com\//url = git@github.com:/g' '{}' \;
+find ${1} -name "config" -ok sed -i 's/url = http.*github\.com\//url = git@github.com:/g' '{}' \;
 
 #test for global settings
 
