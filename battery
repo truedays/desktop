@@ -1,0 +1,33 @@
+#!/bin/bash
+#
+# 🔋 Battery status display 🔋
+# Add to PROMPT_COMMAND to get battery aware BASH prompt
+#
+# https://github.com/truedays/desktop/
+# ray@truedays.org 
+
+red="\e[01;31m"
+ired="\e[01;31m"
+green="\e[00;32m"
+igreen="\e[01;32m"
+yellow="\e[00;33m"
+nil="\e[0;0m"
+batt="🔋"
+STATUS="/sys/devices/LNXSYSTM:00/device:00/PNP0A08:00/device:09/PNP0C09:00/PNP0C0A:00/power_supply/BAT0/status"
+CAPACITY="/sys/devices/LNXSYSTM:00/device:00/PNP0A08:00/device:09/PNP0C09:00/PNP0C0A:00/power_supply/BAT0/capacity"
+
+curCAPACITY="`cat $CAPACITY`"
+curSTATUS="`cat $STATUS`"
+# exit if battery status is full and plugged in
+[ "$(cat $STATUS)" == "Full" ] && exit 0
+
+[ "$(cat $STATUS)" == "Charging" ] && STATCOLOR="$igreen" || STATCOLOR="$ired"
+
+# if %>30 green, 15-30 yellow, <15 red
+CAPCOLOR="$green"
+[ $(cat $CAPACITY) -le 30 ] && CAPCOLOR="$yellow"
+[ $(cat $CAPACITY) -le 15 ] && CAPCOLOR="$red"
+
+
+echo -en "${STATCOLOR}${batt} ${CAPCOLOR}${curCAPACITY}%${nil}"
+
