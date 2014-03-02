@@ -25,8 +25,8 @@ curSTATUS="`cat $STATUS`"
 
 # if %>30 green, 15-30 yellow, <15 red
 CAPCOLOR="$green"
-[ $(cat $CAPACITY) -le 30 ] && CAPCOLOR="$yellow"
-[ $(cat $CAPACITY) -le 15 ] && CAPCOLOR="$red"
+[ $curCAPACITY -le 30 ] && CAPCOLOR="$yellow"
+[ $curCAPACITY -le 15 ] && CAPCOLOR="$red"
 
 
 echo -en "${STATCOLOR}${batt} ${CAPCOLOR}${curCAPACITY}%${nil}"
