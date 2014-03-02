@@ -6,7 +6,7 @@
 # https://github.com/truedays/desktop/
 # ray@truedays.org 
 
-red="\e[01;31m"
+red="\e[00;31m"
 ired="\e[01;31m"
 green="\e[00;32m"
 igreen="\e[01;32m"
