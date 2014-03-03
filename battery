@@ -5,6 +5,7 @@
 #
 # https://github.com/truedays/desktop/
 # ray@truedays.org 
+# ToDo: fix prompt cursor location bug
 
 red="\e[00;31m"
 ired="\e[01;31m"
@@ -13,6 +14,7 @@ igreen="\e[01;32m"
 yellow="\e[00;33m"
 nil="\e[0;0m"
 batt="🔋"
+#batt="±"
 STATUS="/sys/devices/LNXSYSTM:00/device:00/PNP0A08:00/device:09/PNP0C09:00/PNP0C0A:00/power_supply/BAT0/status"
 CAPACITY="/sys/devices/LNXSYSTM:00/device:00/PNP0A08:00/device:09/PNP0C09:00/PNP0C0A:00/power_supply/BAT0/capacity"
 
@@ -30,4 +32,4 @@ CAPCOLOR="$green"
 
 
 echo -en "${STATCOLOR}${batt} ${CAPCOLOR}${curCAPACITY}%${nil}"
-
+unset batt CAPACITY CAPCOLOR curCAPACITY curSTATUS green igreen ired nil red STATUS yellow
