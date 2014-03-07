@@ -1,0 +1,8 @@
+#!/bin/bash
+#
+# add to cron to check tunnel
+#
+
+ps uxh | grep -v "grep" | grep "/usr/bin/ssh -q -f -N -L 8118:localhost:8118 proxy@proxy" -q || /home/ray/github/desktop/startproxy >/dev/null 2>&1
+
+
