@@ -5,7 +5,6 @@
 #
 # https://github.com/truedays/desktop/
 # ray@truedays.org 
-# ToDo: fix prompt cursor location bug
 
 red="\e[00;31m"
 ired="\e[01;31m"
@@ -39,6 +38,4 @@ tput cup 0 $(($(tput cols) -5))
 echo -en "${STATCOLOR}${batt} ${CAPCOLOR}${curCAPACITY}%${nil}"
 # return cursor
 tput rc
-
-
-unset batt CAPACITY CAPCOLOR curCAPACITY curSTATUS green igreen ired nil red STATUS yellow
+exit
