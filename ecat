@@ -6,21 +6,11 @@
 
 while read line 
 do
-#echo -e "$line works"
-#time="$(echo \"$line\" | cut -d\] -f1)"
-#echo yep
-#echo "${time/\"[/} time"
 
 time=$(echo "$line" | egrep -o "^\[[0-9]*\]" | tr "[]" "x")
 time=${time//x}
-newtime="$(date --date=@$time)"
+newtime="$(date '+%F %T' --date=@$time)"
 
 echo "$line" | sed "s/$time/$newtime/g"
-
-#echo $time  time
-#time="$(cut -d']' -f1 $line)"
-#newtime="$(date --date=@$time"
-
-#echo -en "[$newtime] $line"
-
 done
+
