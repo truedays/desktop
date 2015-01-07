@@ -13,9 +13,14 @@ echo "$n numbers generated of which $high was the largest number and $low was th
 exit 0;
 }
 
+roll(){ #this is where I play with $RANDOM
+ x=$RANDOM
+
+}
+
 while :; do
  n=$(($n+1))
- x=$RANDOM
+ roll
  [[ $x -gt ${high:-$MIN} ]] && high=$x && echo "new high number: $high"
  [[ $x -lt ${low:-$MAX} ]] && low=$x && echo "new low number: $low"
 # [[ $x -eq 32767 ]] && echo "$x reached" && abort
