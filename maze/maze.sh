@@ -21,3 +21,7 @@ function draw_maze {
   done
   echo
  done
+}
+
+draw_maze
+
