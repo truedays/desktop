@@ -15,6 +15,7 @@ exit 0;
 
 roll(){ #this is where I play with $RANDOM
  x=$RANDOM
+ x=$(($RANDOM%30))
 
 }
 
