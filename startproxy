@@ -5,6 +5,9 @@
 # Ray 11/02/2013
 # https://github.com/truedays/desktop/
 
+# auto re-establiash script/cron
+# ps uxh | grep -v "grep" | grep "/usr/bin/ssh -q -f -N -L 8118:localhost:8118 proxy@proxy" -q || /home/ray/github/desktop/startproxy >/dev/null 2>&1
+
 ### USER VARIABLES ###
 tunneled_port=8118
 socks_user="proxy"

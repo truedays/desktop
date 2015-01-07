@@ -27,7 +27,6 @@ case $1 in
 
 	-v --verbose = Show user-friendly output
 	-h --help    = This help screen
-	-q --quiet   = Quiet-mode. Just show the encoded string
 
 
 	EOM
