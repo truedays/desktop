@@ -8,15 +8,15 @@
 #
 # ─ │ ┼ 
 
-# Maze's max size: (default: 10x10)
-mapx=9 
+# Maze's max size: (default: 20x10)
+mapx=19
 mapy=9
 declare -a maze
 
 
 function draw_maze {
- for x in $(seq 0 ${mapx}); do
-  for y in $(seq 0 ${mapy}); do
+ for y in $(seq 0 ${mapy}); do
+  for x in $(seq 0 ${mapx}); do
    echo -n "0"
   done
   echo
