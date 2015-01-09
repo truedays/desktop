@@ -1,0 +1,13 @@
+#!/bin/bash
+#
+# watchrun - watch a file and run it if it's modify timestamp changes
+# https://github.com/truedays/desktop
+#
+# TODO: git, cat before run, date before run, auto-run/run if modified since last watchrun, use interpeter declared in she-bang, only watch --match pattern, interval, announce non-zero exit
+
+match="*"
+tmpfile=".watchrun.tmp"
+
+for each in $(ls -1 ${match}); do
+ [[ -f ${tmpfile} ]] 
+ ls -l ${match} > .watchrun.tmp
