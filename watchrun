@@ -5,9 +5,40 @@
 #
 # TODO: git, cat before run, date before run, auto-run/run if modified since last watchrun, use interpeter declared in she-bang, only watch --match pattern, interval, announce non-zero exit
 
-match="*"
-tmpfile=".watchrun.tmp"
+safeBin="/bin/bash|/usr/bin/python"
 
-for each in $(ls -1 ${match}); do
- [[ -f ${tmpfile} ]] 
- ls -l ${match} > .watchrun.tmp
+[[ -f /usr/bin/inotifywait ]] || { echo "inotify-tools not installed -- could not find /usr/bin/inotifywait"; exit 1 }
+
+function run {
+#case /usr/bin/file -b $event in
+#	ASCII text)
+#esac
+echo "extracting filename"
+file="${event/ MODIFY /}"
+echo "Confirming text file on $file"
+[[ "ASCII text" == "$(/usr/bin/file -b ${file}})" ]] || exit 2
+echo "checking if safeBin"
+head='head $file}'
+echo determined bin: $
+cmd="echo $head | grep -o \"#!($safeBin)\""
+cmdad="$(egrep -o ${safeBin} )"
+}
+
+while read event; do 
+ if [[ $prevEvent == $event ]] then
+  # two events on same file indicates a modification
+  run $event
+ fi
+prevEvent=$event
+< /usr/bin/inotifywait -m /tmp/inotify/ -e MODIFY --exclude '\..*'
+
+
+# thowing away ls/find output diff for inotify-tools
+#for each in $(ls -1 ${match}); do
+# [[ -f ${tmpfile} ]] 
+# ls -l ${match} > .watchrun.tmp
+
+# Example command --excludes vi .swp file and all other .hidden files:
+# /usr/bin/inotifywait -m /tmp/inotify/ -e MODIFY --exclude '\..*'
+
+
