@@ -9,7 +9,7 @@ safeBin="/bin/bash|/usr/bin/python"
 
 [[ -f /usr/bin/inotifywait ]] || { echo "inotify-tools not installed -- could not find /usr/bin/inotifywait"; exit 1 }
 
-function run {
+function hit {
 #case /usr/bin/file -b $event in
 #	ASCII text)
 #esac
@@ -18,16 +18,18 @@ file="${event/ MODIFY /}"
 echo "Confirming text file on $file"
 [[ "ASCII text" == "$(/usr/bin/file -b ${file}})" ]] || exit 2
 echo "checking if safeBin"
-head='head $file}'
+head='head -n1 $file}'
 echo determined bin: $
-cmd="echo $head | grep -o \"#!($safeBin)\""
-cmdad="$(egrep -o ${safeBin} )"
+#cmd="$(grep -Eo \"\#!\($safeBin\a)\")"
+#echo "command: $cmd
+
+  echo "exec $(grep -Eo $each $head) $file"
 }
 
 while read event; do 
  if [[ $prevEvent == $event ]] then
   # two events on same file indicates a modification
-  run $event
+  hit $event
  fi
 prevEvent=$event
 < /usr/bin/inotifywait -m /tmp/inotify/ -e MODIFY --exclude '\..*'
