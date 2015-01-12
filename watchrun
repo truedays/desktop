@@ -5,6 +5,8 @@
 #
 # TODO: git, cat before run, date before run, auto-run/run if modified since last watchrun, use interpeter declared in she-bang, only watch --match pattern, interval, announce non-zero exit
 
+echo SCRAPPED; exit 0
+
 safeBin="/bin/bash|/usr/bin/python"
 
 [[ -f /usr/bin/inotifywait ]] || { echo "inotify-tools not installed -- could not find /usr/bin/inotifywait"; exit 1 }
@@ -26,13 +28,13 @@ echo determined bin: $
   echo "exec $(grep -Eo $each $head) $file"
 }
 
-while read event; do 
- if [[ $prevEvent == $event ]] then
+/usr/bin/inotifywait -m /tmp/inotify/ -e MODIFY --exclude '\..*' | while read event; do 
+ if [[ $prevEvent == $event ]]; then
   # two events on same file indicates a modification
   hit $event
  fi
 prevEvent=$event
-< /usr/bin/inotifywait -m /tmp/inotify/ -e MODIFY --exclude '\..*'
+done 
 
 
 # thowing away ls/find output diff for inotify-tools
