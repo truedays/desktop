@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # extract all links from provided URL(s)
+# ray@truedays 01/15/2015
 import sys
 import requests
 from bs4 import BeautifulSoup
