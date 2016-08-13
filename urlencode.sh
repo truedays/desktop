@@ -1,11 +1,14 @@
 #!/bin/bash
 # URL Encoder
 # Ray 12/12/2013
-#
+#     08/13/2016 ADDED: --min|-m for more common encoding
 
-# Enocde as much of the string as possible
+# Encode as much of the string as possible (default) for obfucation
+#  or pass -m to just make the string URL "safe"
 #
-# ToDo: Add another mode to be gentle with ?field1=foo&field2=bar
+# Done: Add another mode to be gentle with ?field1=foo&field2=bar
+# BugFix: -v -m can't both passed at the same time
+# ToDo: Add better argument processing
 
 case $1 in
 	-h*|--h*) 
@@ -59,7 +62,7 @@ esac
 # echo ${string:$each:1}
 #done
 
-if [[ $minimum -eq 1 ]]; then
+if [[ $minimum -eq 1 ]]; then # This is the more commonly used URL Mapping to encode special characters. This will preserve HTTP/GET data (ie. ?var1=foo&var2=bar)
 declare -A c=( 
 [" "]="%20"
 ["!"]="%21"
