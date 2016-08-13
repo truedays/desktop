@@ -9,8 +9,7 @@ do
 
 time=$(echo "$line" | egrep -o "^\[[0-9]*\]" | tr "[]" "x")
 time=${time//x}
-newtime="$(date '+%F %T' --date=@$time)"
+newtime="$(TZ="America/Chicago" date '+%F %T' --date=@$time)"
 
 echo "$line" | sed "s/$time/$newtime/g"
 done
-

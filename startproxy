@@ -18,6 +18,6 @@ listen_port=8118
 echo -en "Establishing tunnel."
 ./dots .1 &
 DOTS=$!
-ps aux | grep -v grep | grep -q "${listen_port}:${listen_host}:${tunneled_port}" || /usr/bin/ssh -q -f -N -L ${listen_port}:${listen_host}:${tunneled_port} ${socks_user}@${socks_host}
+ps aux | grep -v grep | grep -q "${listen_port}:${listen_host}:${tunneled_port}" || /usr/bin/ssh ${1:--q} -f -N -L ${listen_port}:${listen_host}:${tunneled_port} ${socks_user}@${socks_host}
 kill $DOTS
 echo "connection established!"

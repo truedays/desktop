@@ -7,6 +7,7 @@ f.close()
 
 apicmd = "getpredictions"
 apiargv = "&rt=20&stpid=456"
+apiargv = "&rt=78&stpid=11321"
 
 print 'http://www.ctabustracker.com/bustime/api/v1/' + apicmd + apikey + apiargv
 r = requests.get('http://www.ctabustracker.com/bustime/api/v1/' + apicmd + apikey + apiargv)
