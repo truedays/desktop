@@ -1,0 +1,48 @@
+#!/bin/bash
+#
+# watchrun - watch a file and run it if it's modify timestamp changes
+# https://github.com/truedays/desktop
+#
+# TODO: git, cat before run, date before run, auto-run/run if modified since last watchrun, use interpeter declared in she-bang, only watch --match pattern, interval, announce non-zero exit
+
+echo SCRAPPED; exit 0
+
+safeBin="/bin/bash|/usr/bin/python"
+
+[[ -f /usr/bin/inotifywait ]] || { echo "inotify-tools not installed -- could not find /usr/bin/inotifywait"; exit 1 }
+
+function hit {
+#case /usr/bin/file -b $event in
+#	ASCII text)
+#esac
+echo "extracting filename"
+file="${event/ MODIFY /}"
+echo "Confirming text file on $file"
+[[ "ASCII text" == "$(/usr/bin/file -b ${file}})" ]] || exit 2
+echo "checking if safeBin"
+head='head -n1 $file}'
+echo determined bin: $
+#cmd="$(grep -Eo \"\#!\($safeBin\a)\")"
+#echo "command: $cmd
+
+  echo "exec $(grep -Eo $each $head) $file"
+}
+
+/usr/bin/inotifywait -m /tmp/inotify/ -e MODIFY --exclude '\..*' | while read event; do 
+ if [[ $prevEvent == $event ]]; then
+  # two events on same file indicates a modification
+  hit $event
+ fi
+prevEvent=$event
+done 
+
+
+# thowing away ls/find output diff for inotify-tools
+#for each in $(ls -1 ${match}); do
+# [[ -f ${tmpfile} ]] 
+# ls -l ${match} > .watchrun.tmp
+
+# Example command --excludes vi .swp file and all other .hidden files:
+# /usr/bin/inotifywait -m /tmp/inotify/ -e MODIFY --exclude '\..*'
+
+

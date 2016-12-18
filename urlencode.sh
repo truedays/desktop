@@ -1,11 +1,14 @@
 #!/bin/bash
 # URL Encoder
 # Ray 12/12/2013
-#
+#     08/13/2016 ADDED: --min|-m for more common encoding
 
-# Enocde as much of the string as possible
+# Encode as much of the string as possible (default) for obfucation
+#  or pass -m to just make the string URL "safe"
 #
-# ToDo: Add another mode to be gentle with ?field1=foo&field2=bar
+# Done: Add another mode to be gentle with ?field1=foo&field2=bar
+# BugFix: -v -m can't both passed at the same time
+# ToDo: Add better argument processing
 
 case $1 in
 	-h*|--h*) 
@@ -27,7 +30,7 @@ case $1 in
 
 	-v --verbose = Show user-friendly output
 	-h --help    = This help screen
-
+	-m --min     = Minimum conversion. Good for URL sanitation
 
 	EOM
 	exit 0
@@ -36,6 +39,12 @@ case $1 in
 	-v*|--v*)
 	string=$2 # verbose mode only take one argument
 	lenofstring=${#string}
+	;;
+
+	-m*|--m*)
+	string=$2
+	lenofstring=${#string}
+	minimum=1
 	;;
 
 	*)
@@ -53,11 +62,107 @@ esac
 # echo ${string:$each:1}
 #done
 
+if [[ $minimum -eq 1 ]]; then # This is the more commonly used URL Mapping to encode special characters. This will preserve HTTP/GET data (ie. ?var1=foo&var2=bar)
 declare -A c=( 
 [" "]="%20"
 ["!"]="%21"
 ["#"]="#"
-["$"]="%24"
+["$"]="$"
+["%"]="%"
+["&"]="&"
+["'"]="%27"
+["("]="%28"
+[")"]="%29"
+["+"]="+"
+[","]="%2C"
+["-"]="-"
+["."]="."
+["/"]="/"
+["0"]="0"
+["1"]="1"
+["2"]="2"
+["3"]="3"
+["4"]="4"
+["5"]="5"
+["6"]="6"
+["7"]="7"
+["8"]="8"
+["9"]="9"
+[":"]=":"
+[";"]="%3B"
+["<"]="%3C"
+["="]="="
+[">"]="%3E"
+["?"]="?"
+["["]="%5B"
+['\\']="%5C"
+['\]']="%5D"
+["^"]="%5E"
+["_"]="_"
+["a"]="a"
+["A"]="A"
+["b"]="b"
+["B"]="B"
+["c"]="c"
+["C"]="C"
+["d"]="d"
+["D"]="D"
+["e"]="e"
+["E"]="E"
+["f"]="f"
+["F"]="F"
+["g"]="g"
+["G"]="G"
+["h"]="h"
+["H"]="H"
+["i"]="i"
+["I"]="I"
+["j"]="j"
+["J"]="J"
+["k"]="k"
+["K"]="K"
+["l"]="l"
+["L"]="L"
+["m"]="m"
+["M"]="M"
+["n"]="n"
+["N"]="N"
+["o"]="o"
+["O"]="O"
+["p"]="p"
+["P"]="P"
+["q"]="q"
+["Q"]="Q"
+["r"]="r"
+["R"]="R"
+["s"]="s"
+["S"]="S"
+["t"]="t"
+["T"]="T"
+["u"]="u"
+["U"]="U"
+["v"]="v"
+["V"]="V"
+["w"]="w"
+["W"]="W"
+["x"]="x"
+["X"]="X"
+["y"]="y"
+["Y"]="Y"
+["z"]="z"
+["Z"]="Z"
+["{"]="%7B"
+["|"]="%7C"
+["}"]="%7D"
+["~"]="%7E"
+)
+
+else
+declare -A c=(
+[" "]="%20"
+["!"]="%21"
+["#"]="#"
+["$"]="$"
 ["%"]="%25"
 ["&"]="%26"
 ["'"]="%27"
@@ -146,6 +251,7 @@ declare -A c=(
 ["}"]="%7D"
 ["~"]="%7E"
 )
+fi 
 
 #for each in `seq 0 $(($lenofstring-1))`
 # do 
