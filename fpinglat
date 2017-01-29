@@ -1,0 +1,13 @@
+#!/bin/bash
+#
+# fping latency minimal output for xfce4 panel
+# ray December 11, 2016
+#
+
+# fping -C 1 98.139.183.24 -q 
+# 98.139.183.24 : 49.18
+
+#fping -C1 98.139.183.24 -q 2>&1 &&  awk '{print "👍"$3}' || awk '{print "🚫 "}'
+#fping -C1 98.139.183.24 -q 2>&1 | awk '{print "👍"$3}'
+CMD='fping -C1 98.139.183.24 -q 2>&1'
+{ fping -C1 98.139.183.24 -q 2>&1 || echo "x x 🚫  "; } | awk '{print $3}' 

@@ -1,0 +1,22 @@
+#!/bin/bash
+#
+
+# Reference code ray 06/27/2014
+# Desc: echo arguments or piped stream
+
+function readpipe {
+ while read x
+ do
+  echo $x
+ done
+}
+
+#if [[ $# == 0 ]]; Lame way
+if ! [[ -t 0 ]]; # detect pipe in
+ then readpipe
+else  
+ if [[ -t 1 ]] # Hide number of args if piped out
+  then echo "number of args: $#"
+ fi
+ echo $*
+fi
