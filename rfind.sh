@@ -5,27 +5,43 @@
 
 # /tank == path to index
 # -xdev == do not traverse other filesystems
-#find /tank -xdev -printf "$(uname -n)\t%f\t%s\t%Cs\t%Ts\t%p\t%F\t%D\t%y\t%#m\t%i\t%u\t%U\t%g\t%G\n"; }  
+#find /tank -xdev -printf "$(uname -n)\t%f\t%s\t%Cs\t%Ts\t%p\t%F\t%D\t%y\t%#m\t%i\t%u\t%U\t%g\t%G\n"; }
 # %.10A@ == %A@ == unix time with high precission .10A@ == just the first 10 digits unix time of last file ACCESS
 # %A@s == is better than that ^
 [[ $UID -eq 0 ]] || { echo "Must be run as root"; exit 1; }
 
-indexPath=${1:-/tank}
-saveFile="/rfind_$"
-indexDate=$(date +%s)
+indexPath="${1:-/tank}"
+indexPathShort="${indexPath##*/}"
+indexPathShort="$(basename ${indexPath})"
+saveFile="/rfind_${indexPathShort}_$(date +%F).out"
+indexDate="$(date +%s)"
 indexHost="$(uname -n)"  # this or $HOSTNAME ??
-df="$(df --block-size=1K --local --print-type --exclude-type=tmpfs $indexPath)"
-
+df="$(df --block-size=1K --local --print-type --exclude-type=tmpfs $indexPath | sed 's@^@#\t@g')"
+rfindVersion='0.1'
+progName=$0
+progPID=$$
+for i in {0..9}; do line+=_;done
+progDUMP="# $line $progName BEGIN $line
+$(cat /proc/${progPID}/fd/255 | sed 's@^@# @g')
+# $line $progName END $line"
 strfmt='%f\t%s\t%As\t%Cs\t%Ts\t%p\t%F\t%D\t%y\t%#m\t%i\t%u\t%U\t%g\t%G\0'
+
 function main {
-find "${indexPath} -xdev -printf "$strfmt"
+{ # create header
+echo -e "# rfind rfindVersion=${rfindVersion} date=$(date +%s) ($(date))
+# indexHost=$indexHost \n# indexPath=$indexPath \n# DF: \n$df
+#
+#\n${progDUMP//\\/\\\\}
+#
+# strfmt='${strfmt//\\/\\\\}'
+#";
+#find "${indexPath}" -xdev -printf "$strfmt"; } | tee >(gzip > ${saveFile}.gz)
+find "${indexPath}" -xdev -printf "$strfmt"; } | gzip > ${saveFile}.gz
 }
 
-
-
-# Ak == access, Ck == change , Tk == modification time
-
-
+#time main
+main && echo -e "$line$line$line$line\n  Indexing root@$indexHost:$indexPath completed @ $(date) \n $line$line$line$line\n\tTRY: zless ${saveFile}.gz" || echo something failed..
+exit 0
 
 ## ~$ COLUMNS=888 man -Pcat find | \grep -Ei '^\s*%' | sed -e 's/^\s*/#  /g'  # <---- ___GENERATE THE BELOW REFERENCE___
 #  %%     A literal percent sign.
