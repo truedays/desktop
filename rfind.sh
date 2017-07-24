@@ -24,7 +24,8 @@ for i in {0..9}; do line+=_;done
 progDUMP="# $line $progName BEGIN $line
 $(cat /proc/${progPID}/fd/255 | sed 's@^@# @g')
 # $line $progName END $line"
-strfmt='%f\t%s\t%As\t%Cs\t%Ts\t%p\t%F\t%D\t%y\t%#m\t%i\t%u\t%U\t%g\t%G\0'
+#strfmt='%f\t%s\t%As\t%Cs\t%Ts\t%p\t%F\t%D\t%y\t%#m\t%n\t%i\t%u\t%U\t%g\t%G\0'
+strfmt='%f|%s|%As|%Cs|%Ts|%p|%F|%D|%y|%#m|%n|%i|%u|%U|%g|%G\n'
 
 function main {
 { # create header
