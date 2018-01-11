@@ -11,7 +11,7 @@
 [[ $UID -eq 0 ]] || { echo "Must be run as root"; exit 1; }
 
 indexPath="${1:-/tank}"
-indexPathShort="${indexPath##*/}"
+#indexPathShort="${indexPath##*/}"
 indexPathShort="$(basename ${indexPath})"
 saveFile="/rfind_${indexPathShort}_$(date +%F).out"
 indexDate="$(date +%s)"
