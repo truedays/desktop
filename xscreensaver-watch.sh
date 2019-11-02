@@ -4,17 +4,19 @@
 
 process() {
 	while read line; do 
-		echo " ____ $line ____"
-		#online=$(cat /sys/class/power_supply/AC/online)
-		## ignore event when AC is unpluged or unknown
-		## AC power is plugged in and Online
-		#[ $online != "1" ] && continue;
+		#echo " ____ $line ____"
+		online=$(cat /sys/class/power_supply/AC/online)
+		# ignore event when AC is unpluged or unknown
+		# AC power is plugged in and Online
+		[ $online != "1" ] && continue;
 
 		case "$line" in
 			UNBLANK*)
 				addmsg "Unblank";
 				killall -s CONT firefox chrome
-				addmsg "Pausing firefox and chrome"
+				addmsg "Resuming firefox and chrome"
+				/usr/bin/amixer set Master unmute
+				addmsg "Un-Muting"
 				showmsg;
 			;;
 			BLANK*)
@@ -27,6 +29,8 @@ process() {
 				addmsg "Lock"
 				killall -s STOP firefox chrome
 				addmsg "Pausing firefox and chrome"
+				/usr/bin/amixer set Master mute
+				addmsg "Muting"
 			;;
 			*)
 				addmsg "Unknown"
