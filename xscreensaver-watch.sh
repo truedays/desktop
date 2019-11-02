@@ -4,43 +4,74 @@
 
 process() {
 	while read line; do 
+		echo " ____ $line ____"
+		#online=$(cat /sys/class/power_supply/AC/online)
+		## ignore event when AC is unpluged or unknown
+		## AC power is plugged in and Online
+		#[ $online != "1" ] && continue;
+
+		case "$line" in
+			UNBLANK*)
+				addmsg "Unblank";
+				killall -s CONT firefox chrome
+				addmsg "Pausing firefox and chrome"
+				showmsg;
+			;;
+			BLANK*)
+				addmsg "Blank"
+			;;
+			RUN*)
+				addmsg "Run"
+			;;
+			LOCK*)
+				addmsg "Lock"
+				killall -s STOP firefox chrome
+				addmsg "Pausing firefox and chrome"
+			;;
+			*)
+				addmsg "Unknown"
+		esac
+
 		# ignore event when AC is online
-		online=$(cat /sys/class/power_supply/AC/online)
 		[ $online = "1" ] && continue;
 
 		case "$line" in
 			UNBLANK*)
-				echo "Unblank"
+				addmsg "Unblank"
 			;;
 			BLANK*)
-				echo "Blank"
+				addmsg "Blank"
 			;;
 			RUN*)
-				echo "Run"
+				addmsg "Run"
 			;;
 			LOCK*)
-				echo "Lock"
-			;;
-		esac
-
-		# ignore event when AC is unpluged or unknown
-		[ $online != "1" ] && continue;
-
-		case "$line" in
-			UNBLANK*)
-				echo "Unblank"
-			;;
-			BLANK*)
-				echo "Blank"
-			;;
-			RUN*)
-				echo "Run"
-			;;
-			LOCK*)
-				echo "Lock"
+				addmsg "Lock"
 			;;
 		esac
 	done
+}
+
+msgfile="/tmp/.${0/.\//}.msglog"
+addmsg() {
+	echo "$(date '+%a %D %H:%M:%S') $*" >> $msgfile
+}
+clrmsg() {
+	echo "$(date '+%a %D %H:%M:%S') ScreenSaver Messages Cleared" > $msgfile
+}
+showmsg() {
+	zenity \
+	--display=:1.0 \
+	--text-info \
+	--filename=$msgfile \
+	--title='ScreenSaver Messages' \
+	--ok-label 'OK - Acknowledge and clear messages' \
+	--cancel-label 'Close' \
+	--checkbox="Clear Messages" \
+	--modal \
+	--no-wrap \
+	--window-icon=/usr/share/zenity/clothes/sunglasses.png \
+	&& clrmsg
 }
 
 xscreensaver-command -watch | process
