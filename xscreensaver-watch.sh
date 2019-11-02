@@ -22,6 +22,24 @@ process() {
 				echo "Lock"
 			;;
 		esac
+
+		# ignore event when AC is unpluged or unknown
+		[ $online != "1" ] && continue;
+
+		case "$line" in
+			UNBLANK*)
+				echo "Unblank"
+			;;
+			BLANK*)
+				echo "Blank"
+			;;
+			RUN*)
+				echo "Run"
+			;;
+			LOCK*)
+				echo "Lock"
+			;;
+		esac
 	done
 }
 
