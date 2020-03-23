@@ -82,6 +82,7 @@ function dig { /usr/bin/dig +noall +answer +ttlid $@; }
 
 
 alias rsync='rsync -Phav --append-verify '
+alias rsync='rsync --one-file-system --append-verify --log-file=/tmp/.rsync_$(date +%s).log --info=progress2 -haz '
 #alias u='echo "Session is now incognito.";PS1="(⌐■⁀■) \[\033[01;32m\]\u@\h\[\033[01;36m\] \w \[\033[0;37m\] "; unset HISTFILE'
 alias u='echo "Session is now incognito.";PS1="(⌐■-■) \[\033[01;32m\]\u@\h\[\033[01;36m\] \w \[\033[0;37m\] "; unset HISTFILE'
 alias catconf='egrep -v "^$|^#|^\s*$" ' # remove comments and blanklines from conf files
