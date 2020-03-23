@@ -73,7 +73,7 @@ bind -x '"\C-h":ls -blhArt | tail -n5'
 
 #function whoisns { lynx --dump "http://reports.internic.net/cgi/whois?whois_nic=$1&type=nameserver" | grep -B1 "IP Address" -A1; };
 function whoisns { lynx --dump "http://reports.internic.net/cgi/whois?whois_nic=$1&type=nameserver" | grep -B1 "IP Address" -A1 || echo -e "Error: $1 -- Name Server does not appear to be registered\x21"; };
-function dig { /usr/bin/dig $@ +noall +answer +ttlid | egrep -v ";|^$"; };
+function dig { /usr/bin/dig +noall +answer +ttlid $@; }
 
 ##PROMPT_COMMAND="history -a; history -n"
 
