@@ -25,7 +25,8 @@ alias ga="git add"
 alias gp="git push"
 alias gg="git pull"
 # idea from https://github.com/damianb/dotfiles/blob/master/.bashrc
-function gitcommit { git commit -m "$(echo "$@")"; }
+#function gitcommit { git commit -m "$(echo "$@")"; }
+function gitcommit { git commit -m "$*"; }
 alias gc=gitcommit
 
 # youtube-dl  TODO: add proxy detection and auto-use
