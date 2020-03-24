@@ -53,7 +53,6 @@ HISTCONTROL="${HISTCONTROL}:ignorespace"
 alias fs='kill -s STOP `pidof firefox`'
 alias fc='kill -s CONT `pidof firefox`'
 #alias dig='dig +short '
-alias cd..='cd ..'
 alias p='ping -c 3'
 alias mx='dig -t mx +short'
 alias ns='dig -t ns +short'
@@ -94,8 +93,10 @@ alias myip='echo "Public: $(dig +short myip.opendns.com @resolver1.opendns.com)"
 #show battery status on my x1carbon
 alias batt='echo "Battery Status: $(cat /sys/class/power_supply/BAT0/status)   Remaining: $(cat /sys/class/power_supply/BAT0/capacity)"'
 
-alias ..='cd ..'
 alias cd..='cd ..'
+alias ..='cd ..'
+alias ...='cd ../..'
+function .... { cdparentfs=$(df --output=target ./ | tail -n1); echo "$cdparentfs"; cd "$cdparentfs"; unset cdparentfs; }
 alias gerp='grep '
 
 shopt -s cdspell
