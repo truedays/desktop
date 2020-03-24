@@ -28,6 +28,7 @@ alias gg="git pull"
 #function gitcommit { git commit -m "$(echo "$@")"; }
 function gitcommit { git commit -m "$*"; }
 alias gc=gitcommit
+alias gitlog="git log --stat --pretty=short --graph"
 
 # youtube-dl  TODO: add proxy detection and auto-use
 function y { while read url; do echo "$url" >> /tmp/.youtube-dl.log; youtube-dl -q $url & done }
