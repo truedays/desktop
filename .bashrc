@@ -8,7 +8,7 @@ fi
 # User specific aliases and functions
 
 HISTSIZE=1000000
-HISTTIMEFORMAT='%D %R '
+HISTTIMEFORMAT='%F_%R '
 TIMEFORMAT=$'\n\ttime\t%3lR'
 
 # promt from http://www.reddit.com/r/archlinux/comments/1x2gjt/zsh_indicate_that_you_are_using_an_ssh_connection/cf7jp8q 02/05/2014
