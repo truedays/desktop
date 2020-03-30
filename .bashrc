@@ -29,6 +29,7 @@ alias gg="git pull"
 function gitcommit { git commit -m "$*"; }
 alias gc=gitcommit
 alias gitlog="git log --stat --pretty=short --graph"
+alias gl="git log --graph --pretty=tformat:'%Cred%h%Creset %C(bold blue)%<(20,trunc)%an%Creset %C(auto)%d%Creset %s %Cgreen(%cr)'"
 
 # youtube-dl  TODO: add proxy detection and auto-use
 function y { while read url; do echo "$url" >> /tmp/.youtube-dl.log; youtube-dl -q $url & done }
@@ -80,8 +81,7 @@ function dig { /usr/bin/dig +noall +answer +ttlid $@; }
 ##df -h / | tail -n 1 | awk '{print "Disk Usage: "$5" Available: "$4}'
 
 
-alias rsync='rsync -Phav --append-verify '
-alias rsync='rsync --one-file-system --append-verify --log-file=/tmp/.rsync_$(date +%s).log --info=progress2 -haz '
+alias rsync='rsync --no-inc-recursive --stats --one-file-system --append-verify --log-file=/tmp/.rsync_$(date +%s).log --info=progress2 --hard-links -haz '
 alias u='echo "Session is now incognito.";PS1="(⌐■-■) \[\033[01;32m\]\u@\h\[\033[01;36m\] \w \[\033[0;37m\] "; unset HISTFILE'
 alias catconf='egrep -v "^$|^#|^\s*$" ' # remove comments and blanklines from conf files
 
