@@ -68,8 +68,8 @@ alias m='mplayer '
 alias startproxy='cd ~/github/desktop/; ./startproxy; cd -'
 alias sp='cd ~/github/desktop/; ./startproxy; cd -'
 
-# ray binding ctrl-l to my ls command
-bind -x '"\C-l":ll | tail -n5'
+# ray binding ctrl-h to my ls command
+bind -x '"\C-h":ll | tail -n5'
 
 #function whoisns { lynx --dump "http://reports.internic.net/cgi/whois?whois_nic=$1&type=nameserver" | grep -B1 "IP Address" -A1; };
 function whoisns { lynx --dump "http://reports.internic.net/cgi/whois?whois_nic=$1&type=nameserver" | grep -B1 "IP Address" -A1 || echo -e "Error: $1 -- Name Server does not appear to be registered\x21"; };
